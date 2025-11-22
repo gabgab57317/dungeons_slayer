@@ -2,14 +2,5 @@ res://scene/main.tscn
 res://asset/maps/tilemaps_dunjon.tres
 res://asset/player/Soldier/animation/animation_player.tres
 res://asset/enemis/Orc/animation_orc/orc_animation.tres
-res://scene/maps.tscn
-res://scene/player.tscn
-res://scene/orc.tscn
-res://scene/health_pickup.tscn
-res://scene/health_hub.tscn
 res://script/game_manager.gd
-res://script/orc.gd
 res://asset/enemis/skeleton/animation/skeleton_animation.tres
-res://asset/enemis/vampire/animation/vampire_animation.tres
-res://asset/boss/Dead/animation/boss_Dead_animation.tres
-res://scene/skeleton.tscn
