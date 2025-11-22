@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2lt3weih3lyf"]
+
+[ext_resource type="Script" uid="uid://p0jp24qtqrsr" path="res://script/health_hub.gd" id="1_0yvtv"]
+[ext_resource type="Texture2D" uid="uid://daq1d47rmnq6o" path="res://asset/player/health/heart.png" id="1_uup4k"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_0yvtv")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_uup4k")
+expand_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_uup4k")
+expand_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_uup4k")
+expand_mode = 2
+
+[node name="TextureRect4" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_uup4k")
+expand_mode = 2
+
+[node name="TextureRect5" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_uup4k")
+expand_mode = 2
+
+[node name="TextureRect6" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_uup4k")
+expand_mode = 2

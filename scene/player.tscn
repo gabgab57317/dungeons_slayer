@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://burpmeruag72d"]
+
+[ext_resource type="Script" uid="uid://dhmv6la6owe1r" path="res://script/player.gd" id="1_hjaqi"]
+[ext_resource type="SpriteFrames" uid="uid://bcxy0spr642xn" path="res://asset/player/Soldier/animation/animation_player.tres" id="2_fvtld"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1edji"]
+radius = 7.2
+height = 22.4
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hjaqi"]
+size = Vector2(35.2, 19.2)
+
+[node name="player" type="CharacterBody2D"]
+scale = Vector2(5, 5)
+script = ExtResource("1_hjaqi")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = 0.00151547
+sprite_frames = ExtResource("2_fvtld")
+animation = &"walk_player"
+frame_progress = 0.321883
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -0.8)
+shape = SubResource("CapsuleShape2D_1edji")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
+
+[node name="AttackArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(0.400001, -0.599999)
+shape = SubResource("RectangleShape2D_hjaqi")
+debug_color = Color(0.999284, 0, 0.117983, 0.42)

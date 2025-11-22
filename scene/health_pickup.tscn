@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://chpfp7g7k5g7b"]
+
+[ext_resource type="Script" uid="uid://v7nlsnyev064" path="res://script/health_pickup.gd" id="1_pqje6"]
+[ext_resource type="Texture2D" uid="uid://dt5l23pxjm251" path="res://asset/item/heal_tile.png" id="2_b66hq"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xed4v"]
+radius = 5.0
+height = 12.0
+
+[node name="HealthPickup" type="Node2D"]
+script = ExtResource("1_pqje6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_b66hq")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1, -1)
+shape = SubResource("CapsuleShape2D_xed4v")

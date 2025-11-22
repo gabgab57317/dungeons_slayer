@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dedro46e0l3ik"
+path="res://.godot/imported/main.mp3-7528639ae1205ea908bc5429e12d521a.mp3str"
+
+[deps]
+
+source_file="res://asset/sound track/main.mp3"
+dest_files=["res://.godot/imported/main.mp3-7528639ae1205ea908bc5429e12d521a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

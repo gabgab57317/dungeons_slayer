@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4gfy3iooy0gu"]
+
+[ext_resource type="Script" uid="uid://dd3p4a1c6bhum" path="res://script/orc.gd" id="1_r0j3i"]
+[ext_resource type="SpriteFrames" uid="uid://b0a1l3cauxrn6" path="res://asset/enemis/Orc/animation_orc/orc_animation.tres" id="2_yqaon"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_abioc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0j3i"]
+size = Vector2(46.1079, 5.37006)
+
+[node name="orc" type="CharacterBody2D"]
+script = ExtResource("1_r0j3i")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.59913, 1.59913)
+sprite_frames = ExtResource("2_yqaon")
+animation = &"walk_orc"
+frame_progress = 0.234605
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_abioc")
+
+[node name="AttackArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(1.75244, 1.5)
+scale = Vector2(1.50744, -5.40031)
+shape = SubResource("RectangleShape2D_r0j3i")
+debug_color = Color(0.905272, 0, 0.169149, 0.42)

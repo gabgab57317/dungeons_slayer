@@ -1,0 +1,14 @@
+CollisionShape2D
+Area2D
+AnimatedSprite2D
+CharacterBody2D
+Sprite2D
+Timer
+Marker2D
+Node
+AudioStreamPlayer
+TextureRect
+HBoxContainer
+MarginContainer
+CanvasLayer
+CollisionPolygon2D

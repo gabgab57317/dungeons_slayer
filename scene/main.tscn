@@ -1,0 +1,69 @@
+[gd_scene load_steps=8 format=3 uid="uid://w0yxbjb1lw3d"]
+
+[ext_resource type="PackedScene" uid="uid://c5djc7cdd7f4i" path="res://scene/maps.tscn" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://burpmeruag72d" path="res://scene/player.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://b4gfy3iooy0gu" path="res://scene/orc.tscn" id="3_wp4xf"]
+[ext_resource type="PackedScene" uid="uid://d2lt3weih3lyf" path="res://scene/health_hub.tscn" id="4_0ha60"]
+[ext_resource type="PackedScene" uid="uid://chpfp7g7k5g7b" path="res://scene/health_pickup.tscn" id="4_brvut"]
+[ext_resource type="AudioStream" uid="uid://dedro46e0l3ik" path="res://asset/sound track/main.mp3" id="6_4j5ol"]
+[ext_resource type="Script" uid="uid://ciygu7o4wmkax" path="res://script/game_manager.gd" id="7_p1hux"]
+
+[node name="main" type="Node"]
+
+[node name="maps" parent="." instance=ExtResource("1_0xm2m")]
+
+[node name="HealthPickup2" parent="maps" instance=ExtResource("4_brvut")]
+position = Vector2(1137, 418)
+
+[node name="HealthPickup" parent="maps" instance=ExtResource("4_brvut")]
+position = Vector2(216, 536)
+
+[node name="HealthPickup3" parent="maps" instance=ExtResource("4_brvut")]
+position = Vector2(555, 101)
+
+[node name="HealthPickup4" parent="maps" instance=ExtResource("4_brvut")]
+position = Vector2(688, 76)
+
+[node name="HealthPickup5" parent="maps" instance=ExtResource("4_brvut")]
+position = Vector2(1172, 1595)
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("7_p1hux")
+player_path = NodePath("../player")
+teleport_point_path = NodePath("../TeleportPoint1")
+
+[node name="TeleportPoint1" type="Marker2D" parent="."]
+position = Vector2(1231, 1599)
+
+[node name="player" parent="." groups=["player"] instance=ExtResource("2_h2yge")]
+position = Vector2(12, 61)
+scale = Vector2(1.08207, 1.08207)
+
+[node name="CanvasLayer" parent="player" instance=ExtResource("4_0ha60")]
+scale = Vector2(0.55, 0.55)
+transform = Transform2D(0.55, 0, 0, 0.55, 0, 0)
+
+[node name="orc1" parent="." groups=["enemy", "enemy1"] instance=ExtResource("3_wp4xf")]
+position = Vector2(245, 602)
+
+[node name="orc2" parent="." groups=["enemy", "enemy1"] instance=ExtResource("3_wp4xf")]
+position = Vector2(847, 454)
+
+[node name="orc3" parent="." groups=["enemy", "enemy1"] instance=ExtResource("3_wp4xf")]
+position = Vector2(1128, 318)
+
+[node name="orc4" parent="." groups=["enemy", "enemy1"] instance=ExtResource("3_wp4xf")]
+position = Vector2(523, 141)
+
+[node name="orc5" parent="." groups=["enemy", "enemy1"] instance=ExtResource("3_wp4xf")]
+position = Vector2(855, 107)
+
+[node name="orc6" parent="." groups=["enemy", "enemy1"] instance=ExtResource("3_wp4xf")]
+position = Vector2(854, 174)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_4j5ol")
+volume_db = -1.0
+pitch_scale = 0.5
+autoplay = true
+parameters/looping = true
