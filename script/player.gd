@@ -1,30 +1,43 @@
 extends CharacterBody2D
 
+##########################################
+# 🌟 EXPORTS 🌟
+##########################################
 @export var speed: float = 150.0
-@export var max_health: int = 6
+@export var max_health: int = 100
+
+##########################################
+# 🧩 VARIABLES 🧩
+##########################################
 var current_health: int = max_health
 var is_dead: bool = false
-
 var facing_right: bool = true
 var can_attack: bool = true
 var can_take_damage: bool = true
 
+##########################################
+# 🔗 NODES 🔗
+##########################################
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_area: Area2D = $AttackArea
 
-
+##########################################
+# 🚀 READY 🚀
+##########################################
 func _ready():
 	add_to_group("player")
 	anim.play("idle_player")
 
-
-func _physics_process(delta: float) -> void:
+##########################################
+# 🏃 PHYSICS PROCESS 🏃
+##########################################
+func _physics_process(_delta: float) -> void:
 	if is_dead:
 		return
 
 	var direction := Vector2.ZERO
 
-	# === MOUVEMENT ===
+	# ---------- ⬆️⬇️⬅️➡️ MOVEMENT ----------
 	if Input.is_action_pressed("ui_up"):
 		direction.y -= 1
 	if Input.is_action_pressed("ui_down"):
@@ -38,28 +51,33 @@ func _physics_process(delta: float) -> void:
 		anim.flip_h = false
 		direction.x += 1
 
-	# === POSITION HITBOX ===
+	# ---------- ⚔️ ATTACK HITBOX POSITION ----------
 	attack_area.position.x = abs(attack_area.position.x) * (1 if facing_right else -1)
 
-	# === MOUVEMENT BLOQUÉ PENDANT L’ATTAQUE ===
+	# ---------- 🏃 MOVEMENT ----------
 	if can_attack:
 		velocity = direction.normalized() * speed
 		move_and_slide()
 
-		# === ANIMATIONS ===
+		# ---------- 🎨 ANIMATION ----------
 		if direction != Vector2.ZERO:
 			anim.play("walk_player")
 		else:
 			anim.play("idle_player")
 
-	# === ATTAQUES ===
+	# ---------- ⚔️ ATTACK INPUT ----------
 	if Input.is_action_just_pressed("attack1") and can_attack:
 		do_attack(1)
 	elif Input.is_action_just_pressed("attack2") and can_attack:
 		do_attack(2)
 
+	# ---------- 💨 DASH INPUT ----------
+	if Input.is_action_just_pressed("dash"):
+		do_dash(direction)
 
-# --- ATTAQUE ---
+##########################################
+# ⚔️ ATTACK FUNCTION ⚔️
+##########################################
 func do_attack(dmg: int) -> void:
 	can_attack = false
 	velocity = Vector2.ZERO
@@ -73,43 +91,63 @@ func do_attack(dmg: int) -> void:
 	check_attack_hit(dmg)
 	can_attack = true
 
-
+##########################################
+# ⚔️ CHECK ATTACK HIT ⚔️
+##########################################
 func check_attack_hit(dmg: int) -> void:
 	for body in attack_area.get_overlapping_bodies():
 		if body.is_in_group("enemy") and body.has_method("take_damage"):
 			body.take_damage(dmg)
 
+##########################################
+# 💨 DASH FUNCTION 💨
+##########################################
+func do_dash(direction: Vector2):
+	if direction == Vector2.ZERO:
+		direction = Vector2(1 if facing_right else -1, 0)
 
-# --- PRENDRE DES DÉGÂTS ---
+	# Move instantly
+	global_position += direction.normalized() * 10
+
+	# Invincibility and blink
+	can_take_damage = false
+	for i in range(3):
+		anim.modulate = Color(1,1,1) # white blink
+		await get_tree().create_timer(0.1).timeout
+		anim.modulate = Color(1,1,1,1)
+	can_take_damage = true
+
+##########################################
+# ❤️ TAKE DAMAGE ❤️
+##########################################
 func take_damage(dmg: int) -> void:
 	if not can_take_damage or is_dead:
 		return
 
 	current_health -= dmg
 	can_take_damage = false
-
-	# === CLIGNOTEMENT ROUGE ===
 	await blink_red()
 
 	if current_health <= 0:
 		die()
 		return
 
-	# === INVINCIBILITÉ TEMPORAIRE ===
 	await get_tree().create_timer(0.8).timeout
 	can_take_damage = true
 
-
-# --- EFFET CLIGNOTEMENT ---
+##########################################
+# ❤️ BLINK DAMAGE ❤️
+##########################################
 func blink_red():
 	for i in range(3):
-		anim.modulate = Color(1, 0.2, 0.2, 0.4)  # rouge transparent
+		anim.modulate = Color(1,0.2,0.2,0.4)  # rouge transparent
 		await get_tree().create_timer(0.1).timeout
-		anim.modulate = Color(1, 1, 1, 1)  # normal
+		anim.modulate = Color(1,1,1,1)
 		await get_tree().create_timer(0.1).timeout
 
-
-# --- MORT ---
+##########################################
+# ☠️ DIE ☠️
+##########################################
 func die():
 	if is_dead:
 		return
@@ -122,7 +160,8 @@ func die():
 	await get_tree().create_timer(3.0).timeout
 	get_tree().reload_current_scene()
 
-
-# --- HEAL COMPLET ---
+##########################################
+# ❤️ HEAL FULL ❤️
+##########################################
 func heal_full():
 	current_health = max_health

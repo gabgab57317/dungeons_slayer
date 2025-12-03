@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://co26tovlauv5d"]
+
+[ext_resource type="Texture2D" uid="uid://b22a6ipld8qhu" path="res://asset/boss/Mecha-stone Golem 0.1/weapon PNG/arm_projectile.png" id="1_4ap1b"]
+[ext_resource type="Script" uid="uid://481dsoiw0mrw" path="res://script/arme_projectil.gd" id="1_pghsg"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pghsg"]
+height = 34.0
+
+[node name="Node2D" type="Area2D"]
+script = ExtResource("1_pghsg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_4ap1b")
+offset = Vector2(-27, 13)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0)
+rotation = 1.55842
+shape = SubResource("CapsuleShape2D_pghsg")
+debug_color = Color(0.996078, 0, 0.160784, 0.12549)
