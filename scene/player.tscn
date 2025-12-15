@@ -18,8 +18,9 @@ metadata/_edit_group_ = true
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 rotation = 0.00151547
 sprite_frames = ExtResource("2_fvtld")
-animation = &"walk_player"
-frame_progress = 0.321883
+animation = &"dash_player"
+frame = 4
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -0.8)

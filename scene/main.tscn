@@ -1,22 +1,22 @@
-[gd_scene load_steps=14 format=3 uid="uid://w0yxbjb1lw3d"]
+[gd_scene load_steps=13 format=3 uid="uid://w0yxbjb1lw3d"]
 
 [ext_resource type="PackedScene" uid="uid://c5djc7cdd7f4i" path="res://scene/maps.tscn" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://burpmeruag72d" path="res://scene/player.tscn" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://b4gfy3iooy0gu" path="res://scene/orc.tscn" id="3_wp4xf"]
 [ext_resource type="PackedScene" uid="uid://d2lt3weih3lyf" path="res://scene/health_hub.tscn" id="4_0ha60"]
 [ext_resource type="PackedScene" uid="uid://chpfp7g7k5g7b" path="res://scene/health_pickup.tscn" id="4_brvut"]
+[ext_resource type="Script" uid="uid://cndy7cdr82ua8" path="res://script/game_manager_2.gd" id="4_hybxs"]
 [ext_resource type="AudioStream" uid="uid://dedro46e0l3ik" path="res://asset/sound track/main.mp3" id="6_4j5ol"]
 [ext_resource type="Script" uid="uid://ciygu7o4wmkax" path="res://script/game_manager.gd" id="7_p1hux"]
 [ext_resource type="PackedScene" uid="uid://cy8k40apgnfva" path="res://scene/skeleton.tscn" id="8_of57s"]
 [ext_resource type="PackedScene" uid="uid://6a3mfokpgfjt" path="res://scene/mecha_golem.tscn" id="9_b5f6u"]
 [ext_resource type="PackedScene" uid="uid://co26tovlauv5d" path="res://scene/arme_projectil.tscn" id="10_tqoya"]
-[ext_resource type="PackedScene" uid="uid://oskxlym5gvw8" path="res://scene/laser_beam.tscn" id="11_mswub"]
-[ext_resource type="Script" uid="uid://wiwwsn2vsqc8" path="res://script/boss_health_bar.gd" id="11_wscrc"]
-[ext_resource type="Texture2D" uid="uid://cgkytwvj57y17" path="res://asset/boss/Dead/HUDheath_Boss.png" id="12_mswub"]
+[ext_resource type="Script" uid="uid://cv5y035147w1o" path="res://script/BossHPLabel.gd" id="13_mswub"]
 
 [node name="main" type="Node"]
 
 [node name="maps" parent="." instance=ExtResource("1_0xm2m")]
+metadata/_edit_lock_ = true
 
 [node name="HealthPickup2" parent="maps" instance=ExtResource("4_brvut")]
 position = Vector2(1222, 257)
@@ -59,11 +59,19 @@ script = ExtResource("7_p1hux")
 player_path = NodePath("../player")
 teleport_point_path = NodePath("../TeleportPoint1")
 
+[node name="GameManager2" type="Node" parent="."]
+script = ExtResource("4_hybxs")
+player_path = NodePath("../player")
+teleport_point_path = NodePath("../TeleportPoint2")
+
 [node name="TeleportPoint1" type="Marker2D" parent="."]
 position = Vector2(1230, 1501)
 
+[node name="TeleportPoint2" type="Marker2D" parent="."]
+position = Vector2(2006, 48)
+
 [node name="player" parent="." groups=["player"] instance=ExtResource("2_h2yge")]
-position = Vector2(2005, 48)
+position = Vector2(2009, 45)
 scale = Vector2(1.08207, 1.08207)
 
 [node name="CanvasLayer" parent="player" instance=ExtResource("4_0ha60")]
@@ -109,38 +117,21 @@ scale = Vector2(1.5, 1.5)
 position = Vector2(729, 1783)
 scale = Vector2(1.5, 1.5)
 
-[node name="MechaGolem" parent="." node_paths=PackedStringArray("laser_beam") groups=["enemy"] instance=ExtResource("9_b5f6u")]
-position = Vector2(2456, 168)
+[node name="MechaGolem" parent="." groups=["enemy"] instance=ExtResource("9_b5f6u")]
+position = Vector2(2457, 168)
 projectile_scene = ExtResource("10_tqoya")
-laser_beam = NodePath("LaserBeam")
-laser_cooldown = 30.0
+boss_health_bar_path = NodePath("../CanvasLayer/Label")
 
-[node name="LaserBeam" parent="MechaGolem" instance=ExtResource("11_mswub")]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="BossHealthBar" type="CanvasLayer" parent="."]
-script = ExtResource("11_wscrc")
-
-[node name="ArmorFill" type="ColorRect" parent="BossHealthBar"]
+[node name="Label" type="Label" parent="CanvasLayer"]
+visible = false
 anchors_preset = -1
-anchor_left = 2.04427
-anchor_top = -0.066358
-anchor_right = 2.23177
-anchor_bottom = -0.0493827
-color = Color(0, 0, 1, 1)
-metadata/_edit_use_anchors_ = true
-
-[node name="HealthFill" type="ColorRect" parent="BossHealthBar"]
-anchors_preset = -1
-anchor_left = 2.04427
-anchor_top = -0.066358
-anchor_right = 2.23177
-anchor_bottom = -0.0493827
-color = Color(1, 0, 0, 1)
-metadata/_edit_use_anchors_ = true
-
-[node name="Background" type="TextureRect" parent="BossHealthBar"]
-offset_left = 2350.0
-offset_top = -69.0
-offset_right = 2576.0
-offset_bottom = -29.0
-texture = ExtResource("12_mswub")
+anchor_right = 0.103
+offset_left = 450.0
+offset_top = 20.0
+offset_right = 408.344
+offset_bottom = 43.0
+theme_override_font_sizes/font_size = 23
+horizontal_alignment = 1
+script = ExtResource("13_mswub")

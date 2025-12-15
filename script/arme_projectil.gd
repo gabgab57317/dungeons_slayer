@@ -15,7 +15,7 @@ var direction: Vector2 = Vector2.ZERO  # 🎯 Direction de déplacement
 ##########################################
 # 🔗 NODES 🔗
 ##########################################
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D  # 🎨 Animation du projectile
+@onready var sprite: Sprite2D = $AnimatedSprite2D  # 🎨 Animation du projectile
 @onready var area: Area2D = $Area2D                        # ⚔️ Zone de dégâts
 @onready var collision: CollisionShape2D = $Area2D/CollisionShape2D  # ⚡ Collision
 

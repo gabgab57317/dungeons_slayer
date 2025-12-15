@@ -5,7 +5,7 @@ extends CharacterBody2D
 ##########################################
 @export var speed: float = 50.0                # 🏃 Vitesse de déplacement
 @export var detection_range: float = 150.0    # 👀 Distance de détection du joueur
-@export var max_health: int = 1                # ❤️ Vie maximale
+@export var max_health: int = 20              # ❤️ Vie maximale
 @export var attack_cooldown: float = 1.2      # ⏱️ Temps entre attaques
 
 ##########################################

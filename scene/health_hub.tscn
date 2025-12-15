@@ -7,8 +7,9 @@
 script = ExtResource("1_0yvtv")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_top = 608.0
+offset_right = 260.0
+offset_bottom = 648.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2

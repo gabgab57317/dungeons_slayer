@@ -682,7 +682,7 @@ script = ExtResource("1_f7irm")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ypqh7")
-animation = &"start"
+animation = &"RangeAttack"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, 1)
@@ -710,19 +710,15 @@ debug_color = Color(0.999291, 0, 0.117767, 0.42)
 [node name="Timers" type="Node" parent="."]
 
 [node name="attack_cooldown" type="Timer" parent="Timers"]
-one_shot = true
 
 [node name="melee_timer" type="Timer" parent="Timers"]
 one_shot = true
 
 [node name="ranged_timer" type="Timer" parent="Timers"]
-one_shot = true
 
 [node name="laser_timer" type="Timer" parent="Timers"]
 one_shot = true
 
 [node name="block_timer" type="Timer" parent="Timers"]
-one_shot = true
 
 [node name="armor_timer" type="Timer" parent="Timers"]
-one_shot = true

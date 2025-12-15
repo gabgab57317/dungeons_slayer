@@ -5,8 +5,8 @@ extends CharacterBody2D
 ##########################################
 @export var speed: float = 50.0                 # 🏃 Vitesse de déplacement
 @export var detection_range: float = 150.0     # 👀 Distance de détection du joueur
-@export var max_health: int = 5                 # ❤️ Vie maximale
-@export var attack_cooldown: float = 0.5       # ⏱️ Temps entre attaques
+@export var max_health: int = 25                 # ❤️ Vie maximale
+@export var attack_cooldown: float = 3.5       # ⏱️ Temps entre attaques
 
 ##########################################
 # 🧩 VARIABLES 🧩
@@ -18,6 +18,11 @@ var can_attack: bool = true                    # Peut attaquer
 var can_take_damage: bool = true               # Peut prendre des dégâts
 var attack_counter: int = 0                    # Compteur pour varier les attaques
 var player: CharacterBody2D = null             # Joueur ciblé
+
+# ⚔️ Gestion des dégâts sur un frame spécifique
+var attack_damage: int = 1
+var damage_frame: int = 7                      # 6ᵉ frame (index 0 = frame 1)
+var damage_done_this_attack: bool = false
 
 ##########################################
 # 🔗 NODES 🔗
@@ -35,6 +40,9 @@ func _ready():
 	if players.size() > 0:
 		player = players[0]
 	anim.play("idle_skeleton")
+
+	# 🔔 Connecte le signal pour vérifier le frame courant
+	anim.connect("frame_changed", Callable(self, "_on_frame_changed"))
 
 ##########################################
 # 🏃 PHYSICS PROCESS 🏃
@@ -94,22 +102,30 @@ func chase_player():
 func start_attack() -> void:
 	is_attacking = true
 	can_attack = false
+	damage_done_this_attack = false   # 🔄 Reset avant attaque
 	velocity = Vector2.ZERO
 
-	# ---------- ATTAQUE SIMPLE ----------
-	attack_counter += 1
-	var damage := 1
-	var anim_name := "attack_enemy_skeleton"
-	anim.play(anim_name)
+	anim.play("attack_enemy_skeleton")
 
-	await get_tree().create_timer(0.15).timeout
-	perform_attack(damage)
-
+	# ✅ Attendre fin animation
 	await anim.animation_finished
 	is_attacking = false
 
+	# ⏱️ Cooldown avant prochaine attaque
 	await get_tree().create_timer(attack_cooldown).timeout
 	can_attack = true
+
+##########################################
+# ⚡ FRAME-BASED DAMAGE ⚡
+##########################################
+func _on_frame_changed():
+	if not is_attacking:
+		return
+
+	if anim.animation == "attack_enemy_skeleton":
+		if anim.frame == damage_frame and not damage_done_this_attack:
+			damage_done_this_attack = true
+			perform_attack(attack_damage)
 
 ##########################################
 # ⚔️ PERFORM ATTACK ⚔️
@@ -129,15 +145,15 @@ func take_damage(damage: int) -> void:
 	current_health -= damage
 	can_take_damage = false
 
-	# ---------- ⚡ BLINK DAMAGE ----------
+	# ⚡ BLINK DAMAGE
 	blink_effect()
 
-	# ---------- VÉRIFIER MORT ----------
+	# ☠️ Vérifie mort
 	if current_health <= 0:
 		await die()
 		return
 
-	# ---------- INVINCIBILITÉ TEMPORAIRE ----------
+	# ⏱️ Invincibilité temporaire
 	await get_tree().create_timer(0.6).timeout
 	can_take_damage = true
 
@@ -164,13 +180,13 @@ func die() -> void:
 	is_dead = true
 	velocity = Vector2.ZERO
 
-	# ---------- 🔒 DESACTIVER COLLISION ----------
+	# 🔒 Désactiver collisions et hitbox
 	if collision_shape:
 		collision_shape.disabled = true
 	if attack_area:
 		attack_area.monitoring = false
 
-	# ---------- 🎨 ANIMATION DE MORT ----------
+	# 🎨 Animation mort
 	anim.play("death_skeleton")
 	await anim.animation_finished
 	velocity = Vector2.ZERO
