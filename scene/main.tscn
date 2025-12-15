@@ -71,7 +71,7 @@ position = Vector2(1230, 1501)
 position = Vector2(2006, 48)
 
 [node name="player" parent="." groups=["player"] instance=ExtResource("2_h2yge")]
-position = Vector2(2009, 45)
+position = Vector2(11, 57)
 scale = Vector2(1.08207, 1.08207)
 
 [node name="CanvasLayer" parent="player" instance=ExtResource("4_0ha60")]
